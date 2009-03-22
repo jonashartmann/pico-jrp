@@ -28,17 +28,17 @@ void free_table(symbol_t* table) {
    int i;
    for (i = 0; i < TABLE_SIZE; i++)
    {
-   	listNode *prox, *atual;
-   	atual = table->hash_t[i];
+        listNode *prox, *atual;
+        atual = table->hash_t[i];
 
-   	while ( atual != NULL )
-   	{
-   	   	prox = atual->next;
+        while ( atual != NULL )
+        {
+                prox = atual->next;
 
-   		free(atual->next);
-   		free(atual->prev);
-   		atual = prox;
-   	}
+                free(atual->next);
+                free(atual->prev);
+                atual = prox;
+        }
    }
 }
 
@@ -53,42 +53,44 @@ entry_t* lookup(symbol_t table, char* name) {
    return NULL;
 }
 
-int insert(symbol_t* table, entry_t* entry) {
-   int i;
+int insert(symbol_t* table, entry_t* entry) 
+{
    listNode *elem, *prev;
+   char s[20];
+   int posh;
 
-   char* s;
-   s = entry->name;
-
-   int posh = hashpjw(s);
+   strcpy(s, entry->name);
+   posh = hashpjw(s);
 
    // Testa se tem colisão
    if (table->hash_t[posh] == NULL){
-      //printf("sem colisao\n");
-	table->hash_t[posh] = (listNode*)malloc( sizeof(listNode) );
-	table->hash_t[posh]->entry = *entry;
-	table->hash_t[posh]->next = NULL;
-	table->hash_t[posh]->prev = NULL;
+      printf("sem colisao\n");
+        table->hash_t[posh] = (listNode*)malloc( sizeof(listNode) );
+        table->hash_t[posh]->entry = *entry;
+        table->hash_t[posh]->next = NULL;
+        table->hash_t[posh]->prev = NULL;
    }
    else {
-      //printf("com colisao\n");
+      printf("com colisao\n");
 
          elem = table->hash_t[posh];
          while (elem != NULL){
             if (strcmp(elem->entry.name, entry->name) == 0)
             {
                printf("elemento %s jah estah na tabela\n",entry->name );
-               exit(-1);
+               //exit(-1);
+               return(-1);
             }
             prev = elem;
             elem = elem->next;
          }
 
          prev->next = (listNode*)malloc( sizeof(listNode) );
-	 prev->next->entry = *entry;
+         prev->next->entry = *entry;
          prev->next->next = NULL;
          prev->next->prev = prev;
    }
+   return 0;
 }
 
 
@@ -104,6 +106,7 @@ int print_table(symbol_t table) {
       }
       printf("\n");
    }
+   return 0;
 }
 
 int print_file_table(FILE* out, symbol_t table) {
@@ -118,4 +121,6 @@ int print_file_table(FILE* out, symbol_t table) {
       }
       fprintf(out, "\n\n");
    }
+   return 0;
 }
+

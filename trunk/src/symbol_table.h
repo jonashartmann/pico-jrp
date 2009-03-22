@@ -17,7 +17,7 @@
  * estruturas de dados abstratas.
  */
 typedef struct {
-   char* name;  /**< um string que representa o nome de uma variavel. */
+   char name[20];  /**< um string que representa o nome de uma variavel. */
    int type;    /**< representacao do tipo da variavel. */
    int size;    /**< numero de Bytes necessarios para armazenamento. */
    int desloc;  /**< Endereco da proxima variavel. */
@@ -26,9 +26,9 @@ typedef struct {
 
 typedef struct _list
 {
-	entry_t entry;
-	struct _list *next;
-	struct _list *prev;
+        entry_t entry;
+        struct _list *next;
+        struct _list *prev;
 } listNode;
 
 struct _hash

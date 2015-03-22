@@ -1,0 +1,1 @@
+o trabalho consiste na realização de um pequeno compilador.
